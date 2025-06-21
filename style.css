@@ -1,0 +1,120 @@
+.btn-green {
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px 25px;
+    margin: 10px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.btn-green:hover {
+    background-color: #388e3c;
+}
+
+.btn-blue {
+    background-color: #2196F3;
+    color: white;
+    padding: 12px 25px;
+    margin: 10px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.btn-blue:hover {
+    background-color: #1976D2;
+}
+
+#watermark-label {
+    display: block;
+    margin-top: 10px;
+    font-weight: bold;
+    color: #fff;
+}
+
+  /* Navbar */
+  .navbar {
+    background-color: rgba(0, 0, 0, 0);
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+  }
+  .navbar .nav-links {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+  }
+  .navbar .nav-links a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+  }
+
+
+  .navbar .nav-logo {
+    font-size: 1.5em;
+    font-weight: bold;
+  }
+
+  .nav-links a {
+    color: #ffffff; 
+    font-weight: bold;
+    font-size: 1.5rem;
+    text-decoration: none;
+  }
+  .nav-links a:hover {
+    color: #585858; 
+  }  
+
+
+  .nav-logo {
+    color: #ffffff; 
+    font-weight: bold;
+    font-size: 1.5rem;
+    text-decoration: none;
+  }
+  
+  .nav-logo:hover {
+    color: #585858; 
+  }  
+  
+  /* Spinner */
+  .spinner {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 50px;
+    height: 50px;
+    border: 5px solid #f3f3f3;
+    border-top: 5px solid #555;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+  }
+  @keyframes spin {
+    to { transform: translate(-50%, -50%) rotate(360deg); }
+  }
+  .hidden {
+    display: none;
+  }
+  
+  /* Status message */
+  .status-message {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #c8ffd5;
+    color: white;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-weight: bold;
+    z-index: 999;
+  }
+  
