@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Watermarking App UI</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <script src="{{ url_for('static', filename='js/main.js') }}" defer></script>
+</head>
+<body>
+  <nav class="navbar">
+    <a href="{{ url_for('index') }}" class="nav-logo">Home</a>
+    <ul class="nav-links">
+      <li><a href="{{ url_for('method_select') }}">Methods</a></li>
+      <li><a href="{{ url_for('fuse_page') }}">Fusion</a></li>
+      <li><a href="{{ url_for('watermark_page') }}">Watermark</a></li>
+    </ul>
+  </nav>
+
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+
+  <div id="status-message" class="status-message hidden"></div>
+  <div id="spinner" class="spinner hidden"></div>
+</body>
+</html>
