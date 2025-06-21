@@ -1,0 +1,189 @@
+<!DOCTYPE html> 
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Watermark Embedding & Extraction</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-image: url("/static/background2.jpg");
+            background-size: cover;
+            background-position: center;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: white;
+            text-align: center;
+            overflow-x: hidden;
+        }
+
+        h1 {
+            margin-top: 30px;
+            font-size: 3rem;
+            animation: fadeInDown 1s ease-out;
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            animation: fadeInDown 1s ease;
+        }
+
+        form {
+            background-color: rgba(0, 0, 0, 0.4);
+            padding: 20px 30px;
+            margin: 10px;
+            border-radius: 15px;
+            display: inline-block;
+            animation: fadeIn 1.2s ease;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+
+        input[type="file"] {
+            width: 250px;
+            padding: 8px;
+            border-radius: 8px;
+            border: none;
+            background: #ffffff;
+            color: #000000;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        input[type="file"]:hover {
+            transform: scale(1.05);
+        }
+
+        .btn-green, .btn-blue {
+            padding: 10px 20px;
+            font-size: 1rem;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: transform 0.3s, background-color 0.3s;
+        }
+
+        .btn-green {
+            background-color: #ce0000;
+            color: white;
+        }
+
+        .btn-blue {
+            background-color: #0984e3;
+            color: white;
+        }
+
+        .btn-green:hover {
+            background-color: #860303;
+            transform: scale(1.05);
+        }
+
+        .btn-blue:hover {
+            background-color: #067cc2;
+            transform: scale(1.05);
+        }
+
+        .image-preview {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 40px;
+            margin-top: 30px;
+            animation: fadeInUp 1s ease;
+        }
+
+        .image-preview div {
+            background-color: rgba(0, 0, 0, 0.4);
+            padding: 15px;
+            border-radius: 10px;
+        }
+
+        .image-preview img {
+            max-width: 250px;
+            height: auto;
+            border-radius: 8px;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+{% extends "layout.html" %}
+{% block content %}
+<h2>Watermark Embedding & Extraction</h2>
+
+<form method="POST" action="/embed" enctype="multipart/form-data" class="dropzone">
+  <label>Select Watermark Image:</label>
+  <input type="file" name="watermark" required>
+  <br>
+  <button type="submit" class="btn-green">Embed Watermark</button>
+</form>
+
+<form method="POST" action="/extract">
+  <button type="submit" class="btn-blue">Extract Watermark</button>
+</form>
+
+{% if wm or embedded or extracted %}
+<div class="image-preview">
+    {% if fused %}
+    <div>
+        <p>Fused Image</p>
+        <img src="data:image/png;base64,{{ fused }}">
+    </div>
+    {% endif %}
+  {% if wm %}
+  <div>
+    <p>Watermark</p>
+    <img src="data:image/png;base64,{{ wm }}">
+  </div>
+  {% endif %}
+  {% if embedded %}
+  <div>
+    <p>Watermarked Image</p>
+    <img src="data:image/png;base64,{{ embedded }}">
+    <br><br>
+    <a download="watermarked.jpg" href="data:image/png;base64,{{ embedded }}" class="btn-green">Download Watermarked</a>
+  </div>
+  {% endif %}
+  {% if extracted %}
+  <div>
+    <p>Extracted Watermark</p>
+    <img src="data:image/png;base64,{{ extracted }}">
+    <br><br>
+    <a download="extracted.png" href="data:image/png;base64,{{ extracted }}" class="btn-blue">Download Extracted</a>
+  </div>
+  {% endif %}
+</div>
+<script>showStatus("Watermarking operation complete.")</script>
+{% endif %}
+{% endblock %}
+
+<script>
+    document.getElementById("watermark").addEventListener("change", function() {
+        const label = document.getElementById("watermark-label");
+        label.textContent = this.files[0] ? this.files[0].name : "No file chosen";
+    });
+    </script>    
+
+</body>
+</html>
