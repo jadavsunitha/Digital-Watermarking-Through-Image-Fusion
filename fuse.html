@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Image Fusion</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-image: url("/static/background2.jpg");
+            background-size: cover;
+            background-position: center;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: white;
+            text-align: center;
+            overflow-x: hidden;
+        }
+
+        h1 {
+            margin-top: 30px;
+            font-size: 3rem;
+            animation: fadeInDown 1s ease-out;
+        }
+
+        form {
+            background-color: rgba(0, 0, 0, 0.4);
+            display: inline-block;
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px auto;
+            animation: fadeIn 1.2s ease-in;
+        }
+
+        label {
+            display: block;
+            margin: 10px 0 5px;
+            font-size: 1.2rem;
+        }
+
+        input[type="file"] {
+            width: 250px;
+            padding: 8px;
+            border-radius: 8px;
+            border: none;
+            background: #ffffff;
+            color: #000000;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        input[type="file"]:hover {
+            transform: scale(1.05);
+        }
+
+        button {
+            margin-top: 15px;
+            padding: 10px 20px;
+            font-size: 1rem;
+            background-color: #6c5ce7;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        button:hover {
+            background-color: #5e50d4;
+            transform: scale(1.05);
+        }
+
+        .image-container {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 40px;
+            flex-wrap: wrap;
+            animation: fadeInUp 1s ease;
+        }
+
+        .image-container div {
+            background-color: rgba(0, 0, 0, 0.4);
+            padding: 15px;
+            border-radius: 15px;
+            max-width: 300px;
+            transition: transform 0.3s ease;
+        }
+
+        .image-container div:hover {
+            transform: scale(1.03);
+        }
+
+        .image-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+
+        .btn {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 12px 25px;
+            font-size: 1.1rem;
+            background-color: #ce0000;
+            color: white;
+            text-decoration: none;
+            border-radius: 12px;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #860303;
+            transform: scale(1.05);
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    {% extends "layout.html" %}
+{% block content %}
+<h1>Image Fusion</h1>
+
+<form action="/fuse" method="post" enctype="multipart/form-data" class="dropzone">
+  <label>Select Image 1:</label>
+  <input type="file" name="image1" required>
+  <label>Select Image 2:</label>
+  <input type="file" name="image2" required>
+  <br>
+  <button type="submit">Fuse Images</button>
+</form>
+
+{% if img1 and img2 and fused %}
+  <div class="image-container">
+    <div>
+      <h3>Image 1</h3>
+      <img src="data:image/jpeg;base64,{{ img1 }}" alt="Image 1">
+    </div>
+    <div>
+      <h3>Image 2</h3>
+      <img src="data:image/jpeg;base64,{{ img2 }}" alt="Image 2">
+    </div>
+    <div>
+      <h3>Fused Image</h3>
+      <img src="data:image/jpeg;base64,{{ fused }}" alt="Fused Image">
+      <br><br>
+      <a download="fused.jpg" href="data:image/jpeg;base64,{{ fused }}" class="btn-green">Download Fused</a>
+    </div>
+  </div>
+  <a href="{{ url_for('watermark_page') }}" class="btn">Go to Watermark Page</a>
+  <script>showStatus("Fusion successful!")</script>
+{% endif %}
+{% endblock %}
+</body>
+</html>
